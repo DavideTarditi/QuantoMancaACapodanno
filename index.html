@@ -38,9 +38,15 @@
   <canvas id="fireworks"></canvas>
   <div id="countdown"></div>
 
+  <!-- Sound Effects -->
+  <audio id="fireworkSound" src="https://www.soundjay.com/firework/firework-explosion-01.mp3"></audio>
+  <audio id="newYearSound" src="https://www.soundjay.com/celebration/cheering-01.mp3"></audio>
+
   <script>
     const canvas = document.getElementById('fireworks');
     const ctx = canvas.getContext('2d');
+    const fireworkSound = document.getElementById('fireworkSound');
+    const newYearSound = document.getElementById('newYearSound');
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -56,6 +62,8 @@
         this.color = color;
         this.particles = [];
         this.initParticles();
+        fireworkSound.currentTime = 0; // Reset sound
+        fireworkSound.play();
       }
 
       initParticles() {
@@ -129,6 +137,9 @@
         countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
       } else {
         countdownElement.textContent = "Happy New Year!";
+        if (!newYearSound.played.length) {
+          newYearSound.play();
+        }
       }
     }
 
