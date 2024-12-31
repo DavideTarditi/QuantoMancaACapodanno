@@ -32,23 +32,57 @@
       z-index: 1;
       pointer-events: none;
     }
+    #easterEgg {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1.5rem;
+      z-index: 20;
+      display: none;
+    }
+    #newYearBanner {
+      position: fixed;
+      top: 20%;
+      width: 100%;
+      text-align: center;
+      font-size: 3rem;
+      color: #ffcc00;
+      text-shadow: 2px 2px 5px #000;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <canvas id="fireworks"></canvas>
   <div id="countdown"></div>
+  <div id="easterEgg"></div>
+  <div id="newYearBanner">🎉 2024 is here! 🎉</div>
 
   <!-- Sound Effects -->
   <audio id="fireworkSound" src="https://www.soundjay.com/firework/firework-explosion-01.mp3"></audio>
   <audio id="newYearSound" src="https://www.soundjay.com/celebration/cheering-01.mp3"></audio>
   <audio id="backgroundMusic" src="https://www.soundjay.com/misc/bells-loop.mp3" loop></audio>
-
   <script>
     const canvas = document.getElementById('fireworks');
     const ctx = canvas.getContext('2d');
     const fireworkSound = document.getElementById('fireworkSound');
     const newYearSound = document.getElementById('newYearSound');
     const backgroundMusic = document.getElementById('backgroundMusic');
+    const easterEgg = document.getElementById('easterEgg');
+    const newYearBanner = document.getElementById('newYearBanner');
+
+    const easterEggMessages = [
+      "You're doing great!",
+      "Keep waiting, it's worth it!",
+      "Fun fact: Fireworks were invented in China!",
+      "Only a few moments left!",
+      "Did you know? The first New Year celebration dates back 4,000 years!",
+    ];
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -140,13 +174,34 @@
         if (backgroundMusic.paused) {
           backgroundMusic.play();
         }
+
+        // Random Easter Egg
+        if (Math.random() < 0.005) { // 0.5% chance every second
+          showEasterEgg();
+        }
       } else {
         countdownElement.textContent = "Happy New Year!";
         if (!newYearSound.played.length) {
           backgroundMusic.pause();
           newYearSound.play();
+          showNewYearBanner();
         }
       }
+    }
+
+    // Show random Easter Egg
+    function showEasterEgg() {
+      const message = easterEggMessages[Math.floor(Math.random() * easterEggMessages.length)];
+      easterEgg.textContent = message;
+      easterEgg.style.display = "block";
+      setTimeout(() => {
+        easterEgg.style.display = "none";
+      }, 3000);
+    }
+
+    // Show New Year Banner
+    function showNewYearBanner() {
+      newYearBanner.style.display = "block";
     }
 
     // Launch fireworks continuously
