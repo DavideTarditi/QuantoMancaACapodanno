@@ -38,7 +38,6 @@
   <div id="countdown"></div>
 
   <script>
-    // Fireworks effect
     const canvas = document.getElementById('fireworks');
     const ctx = canvas.getContext('2d');
 
@@ -129,23 +128,15 @@
         countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
       } else {
         countdownElement.textContent = "Happy New Year!";
-        launchFirework();
       }
     }
 
-    // Fireworks launch every second after countdown reaches 0
-    setInterval(() => {
-      const now = new Date();
-      const nextYear = now.getFullYear() + 1;
-      const newYear = new Date(`January 1, ${nextYear} 00:00:00`);
-      if (newYear - now <= 0) {
-        launchFirework();
-      }
-    }, 1000);
+    // Launch fireworks continuously
+    setInterval(launchFirework, 500);
 
     // Start animations
-    setInterval(updateCountdown, 1000);
     animateFireworks();
+    setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
 </body>
